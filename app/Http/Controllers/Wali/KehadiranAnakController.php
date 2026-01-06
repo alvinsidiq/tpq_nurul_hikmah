@@ -15,15 +15,9 @@ class KehadiranAnakController extends Controller
         $waliId = auth()->id();
         $anak = Santri::where('wali_user_id', $waliId)->orderBy('nama_lengkap')->get();
 
-        $santriId = (int) $request->get('santri_id');
-        if ($anak->count() === 1) {
-            $santriId = $santriId ?: (int) $anak->first()->id;
-        }
+        $santriId = (int) optional($anak->first())->id;
 
-        $bulan = $request->get('bulan'); // format YYYY-MM
-        if (!$bulan) {
-            $bulan = now()->format('Y-m');
-        }
+        $bulan = $request->get('bulan') ?: now()->format('Y-m'); // format YYYY-MM
         $start = Carbon::createFromFormat('Y-m-d', $bulan.'-01')->startOfMonth();
         $end = (clone $start)->endOfMonth();
 
@@ -54,4 +48,3 @@ class KehadiranAnakController extends Controller
         return view('wali.kehadiran.index', compact('anak','items','ringkasan','santriId','bulan'));
     }
 }
-

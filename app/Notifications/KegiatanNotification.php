@@ -24,12 +24,16 @@ class KegiatanNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Kegiatan TPQ: '.$this->kegiatan->nama)
-            ->line('Assalamu’alaikum, berikut informasi kegiatan TPQ:')
-            ->line('Nama: '.$this->kegiatan->nama)
-            ->line('Tanggal: '.$this->kegiatan->tanggal)
-            ->line('Lokasi: '.($this->kegiatan->lokasi ?: '-'))
-            ->line('Deskripsi: '.($this->kegiatan->deskripsi ?: '-'))
-            ->line('Terima kasih.');
+            ->subject('Informasi Kegiatan TPQ: '.$this->kegiatan->nama)
+            ->greeting('Assalamu’alaikum, '.$notifiable->name)
+            ->line('Berikut informasi kegiatan terbaru di TPQ:')
+            ->line('Judul: '.$this->kegiatan->nama)
+            ->line('Tanggal: '.optional($this->kegiatan->tanggal)->format('d F Y'))
+            ->line('Lokasi: '.$this->kegiatan->lokasi)
+            ->line('Penanggung Jawab: '.($this->kegiatan->penanggung_jawab ?? '-'))
+            ->line('Deskripsi:')
+            ->line($this->kegiatan->deskripsi ?: '-')
+            ->action('Lihat Kegiatan', url('/'))
+            ->line('Terima kasih atas perhatian dan dukungannya.');
     }
 }

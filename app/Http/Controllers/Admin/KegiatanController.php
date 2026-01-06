@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreKegiatanRequest;
 use App\Http\Requests\Admin\UpdateKegiatanRequest;
 use App\Models\Kegiatan;
+use App\Models\User;
+use App\Notifications\KegiatanNotification;
+use Illuminate\Support\Facades\Notification;
 
 class KegiatanController extends Controller
 {
@@ -47,5 +50,17 @@ class KegiatanController extends Controller
     {
         $kegiatan->delete();
         return back()->with('success','Kegiatan dihapus');
+    }
+
+    public function notify(Kegiatan $kegiatan)
+    {
+        $wali = User::role('wali_santri')->whereNotNull('email')->get();
+        if ($wali->isEmpty()) {
+            return back()->with('error', 'Tidak ada wali santri dengan email terdaftar.');
+        }
+
+        Notification::send($wali, new KegiatanNotification($kegiatan));
+
+        return back()->with('success', 'Notifikasi email dikirim ke wali santri.');
     }
 }

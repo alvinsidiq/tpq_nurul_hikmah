@@ -26,12 +26,13 @@ Route::middleware(['auth','verified'])->get('/post-login', function () {
 Route::middleware(['auth','verified','role:admin'])->group(function(){
     Route::view('/admin','dashboards.admin')->name('admin.dashboard');
 });
-Route::middleware(['auth','verified','role:guru'])->group(function(){
+Route::middleware(['auth','verified','role:admin|guru'])->group(function(){
     Route::view('/guru','dashboards.guru')->name('guru.dashboard');
     Route::name('guru.')->prefix('guru')->group(function(){
-        Route::resource('kelas', \App\Http\Controllers\Guru\KelasSayaController::class)->only(['index','show','edit','update']);
+        Route::resource('kelas', \App\Http\Controllers\Guru\KelasSayaController::class)->only(['index','show']);
         // Kehadiran
         Route::get('kehadiran', [\App\Http\Controllers\Guru\KehadiranController::class, 'index'])->name('kehadiran.index');
+        Route::get('kehadiran/harian/{kelas}', [\App\Http\Controllers\Guru\KehadiranController::class, 'daily'])->name('kehadiran.daily');
         Route::get('kehadiran/kelas/{kelas}', [\App\Http\Controllers\Guru\KehadiranController::class, 'form'])->name('kehadiran.form');
         Route::post('kehadiran/kelas/{kelas}', [\App\Http\Controllers\Guru\KehadiranController::class, 'store'])->name('kehadiran.store');
 
@@ -71,8 +72,7 @@ Route::middleware(['auth','verified','role:admin'])->name('admin.')->prefix('adm
     Route::resource('mapel', \App\Http\Controllers\Admin\MataPelajaranController::class);
     Route::resource('kelas', \App\Http\Controllers\Admin\KelasController::class);
 
-    // Tetap simpan placeholder sementara untuk menu Semester
-    Route::view('semesters', 'admin.akademik.semesters.index')->name('semesters.index');
+    Route::resource('semesters', \App\Http\Controllers\Admin\SemesterController::class);
 
     // Data Guru
     Route::resource('guru', \App\Http\Controllers\Admin\GuruController::class);
@@ -81,6 +81,7 @@ Route::middleware(['auth','verified','role:admin'])->name('admin.')->prefix('adm
     Route::resource('santri', \App\Http\Controllers\Admin\SantriController::class);
     
     // Kegiatan TPQ
+    Route::post('kegiatan/{kegiatan}/notify', [\App\Http\Controllers\Admin\KegiatanController::class, 'notify'])->name('kegiatan.notify');
     Route::resource('kegiatan', \App\Http\Controllers\Admin\KegiatanController::class);
 
     // Jadwal

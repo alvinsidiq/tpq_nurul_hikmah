@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('santris', function (Blueprint $t) {
             $t->id();
-            $t->string('nis')->unique();
+            $t->string('no_induk')->unique();
             $t->string('nama_lengkap');
             $t->date('tgl_lahir')->nullable();
             $t->text('alamat')->nullable();

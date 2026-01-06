@@ -26,7 +26,7 @@ class KelasSayaController extends Controller
         if ($q !== '') {
             $santriQuery->where(function ($sub) use ($q) {
                 $sub->where('nama_lengkap', 'like', "%$q%")
-                    ->orWhere('nis', 'like', "%$q%");
+                    ->orWhere('no_induk', 'like', "%$q%");
             });
         }
         if ($jilid !== null && $jilid !== '') {

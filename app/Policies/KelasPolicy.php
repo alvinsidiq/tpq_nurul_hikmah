@@ -25,7 +25,11 @@ class KelasPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Kelas $kelas): bool { return $kelas->guru_id === $user->id; }
+    public function view(User $user, Kelas $kelas): bool
+    {
+        // Guru boleh melihat data kelas (read-only), admin sudah diizinkan di before()
+        return $user->hasRole('guru') || $kelas->guru_id === $user->id;
+    }
 
     /**
      * Determine whether the user can create models.
@@ -35,7 +39,11 @@ class KelasPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Kelas $kelas): bool { return $kelas->guru_id === $user->id; }
+    public function update(User $user, Kelas $kelas): bool
+    {
+        // Guru boleh memperbarui data yang terkait kelas (presensi, dll), admin sudah diizinkan di before()
+        return $user->hasRole('guru') || $kelas->guru_id === $user->id;
+    }
 
     /**
      * Determine whether the user can delete the model.

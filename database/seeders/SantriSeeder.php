@@ -18,10 +18,10 @@ class SantriSeeder extends Seeder
         }
 
         $data = [
-            ['nis' => 'S001', 'nama_lengkap' => 'Ahmad Fauzi', 'jilid_level' => 1],
-            ['nis' => 'S002', 'nama_lengkap' => 'Siti Aminah', 'jilid_level' => 2],
-            ['nis' => 'S003', 'nama_lengkap' => 'Budi Pratama', 'jilid_level' => 1],
-            ['nis' => 'S004', 'nama_lengkap' => 'Nur Aisyah', 'jilid_level' => 3],
+            ['no_induk' => 'S001', 'nama_lengkap' => 'Ahmad Fauzi', 'jilid_level' => 1],
+            ['no_induk' => 'S002', 'nama_lengkap' => 'Siti Aminah', 'jilid_level' => 2],
+            ['no_induk' => 'S003', 'nama_lengkap' => 'Budi Pratama', 'jilid_level' => 1],
+            ['no_induk' => 'S004', 'nama_lengkap' => 'Nur Aisyah', 'jilid_level' => 3],
         ];
 
         $i = 0;
@@ -30,7 +30,7 @@ class SantriSeeder extends Seeder
             $kid = $kelas[$i % count($kelas)];
             $i++;
             Santri::firstOrCreate(
-                ['nis' => $s['nis']],
+                ['no_induk' => $s['no_induk']],
                 [
                     'nama_lengkap' => $s['nama_lengkap'],
                     'tgl_lahir' => null,
@@ -43,4 +43,3 @@ class SantriSeeder extends Seeder
         }
     }
 }
-

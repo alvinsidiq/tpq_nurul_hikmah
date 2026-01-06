@@ -7,6 +7,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -47,5 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function kelasDiampu()
     {
         return $this->hasMany(\App\Models\Kelas::class, 'guru_id');
+    }
+
+    public function guruProfile(): HasOne
+    {
+        return $this->hasOne(Guru::class);
     }
 }

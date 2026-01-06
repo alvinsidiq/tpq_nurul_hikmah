@@ -14,7 +14,23 @@ class GuruController extends Controller
 {
     public function index()
     {
-        $items = Guru::with('user')->paginate(12);
+        // Pastikan setiap user dengan role guru memiliki profil Guru
+        $guruUsers = User::role('guru')->get();
+        foreach ($guruUsers as $user) {
+            $user->guruProfile()->firstOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'nama_lengkap' => $user->name,
+                    'nip_nig' => null,
+                    'gelar' => null,
+                    'no_telepon' => $user->phone ?? null,
+                    'alamat' => 'Alamat guru tidak diisi',
+                ]
+            );
+        }
+
+        // Ambil semua profil guru beserta akun pengguna terkait tanpa paginasi
+        $items = Guru::with('user')->orderBy('nama_lengkap')->get();
         return view('admin.guru.index', compact('items'));
     }
 

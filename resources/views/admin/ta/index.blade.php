@@ -1,37 +1,87 @@
 <x-app-layout>
     <x-slot name="header"><h2>Tahun Ajaran</h2></x-slot>
-    <div class="p-6 max-w-7xl mx-auto">
-        <x-flash/>
-        <div class="flex items-center justify-between">
-            <div class="text-sm text-gray-600">Total: {{ $items->total() }} data</div>
-            <a class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded" href="{{ route('admin.ta.create') }}">Tambah</a>
+
+    <div class="min-h-screen bg-white py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto space-y-4">
+            <x-flash/>
+
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <p class="text-sm uppercase tracking-[0.3em] text-indigo-500 font-semibold">Kelola Kalender TPQ</p>
+                    <p class="text-3xl font-bold text-gray-900">Total {{ $items->total() }} Tahun Ajaran</p>
+                    <p class="text-sm text-gray-500 mt-1">Atur periode aktif agar jadwal dan laporan mengikuti rentang yang tepat.</p>
+                </div>
+                <a href="{{ route('admin.ta.create') }}"
+                    class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800">
+                    Tambah Tahun Ajaran
+                </a>
+            </div>
+
+            <div class="rounded-2xl border border-zinc-200 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-[820px] table-auto text-sm text-gray-700">
+                        <thead>
+                            <tr class="bg-zinc-50 text-zinc-900">
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Nama</th>
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Mulai</th>
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Selesai</th>
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Status</th>
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200">
+                            @forelse($items as $i)
+                                <tr class="bg-white hover:bg-zinc-50 transition-colors duration-200">
+                                    <td class="px-6 py-5 align-top">
+                                        <p class="text-base font-semibold text-gray-900 tracking-tight">{{ $i->nama }}</p>
+                                        <p class="text-xs text-gray-500">Kode: {{ $i->kode ?? '-' }}</p>
+                                    </td>
+                                    <td class="px-6 py-5 align-top">
+                                        <span class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 shadow-sm shadow-indigo-50">
+                                            {{ \Carbon\Carbon::parse($i->tanggal_mulai)->translatedFormat('d F Y') }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-5 align-top">
+                                        <span class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 shadow-sm shadow-indigo-50">
+                                            {{ \Carbon\Carbon::parse($i->tanggal_selesai)->translatedFormat('d F Y') }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-5 align-top">
+                                        @php $isActive = $i->aktif; @endphp
+                                        <span class="inline-flex items-center rounded-full px-4 py-1.5 text-xs font-semibold shadow-sm {{ $isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-500' }}">
+                                            <span class="h-2 w-2 rounded-full {{ $isActive ? 'bg-emerald-500' : 'bg-gray-400' }} me-2"></span>
+                                            {{ $isActive ? 'Aktif' : 'Nonaktif' }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-5 align-top">
+                                        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                                            <a href="{{ route('admin.ta.edit',$i) }}"
+                                                class="rounded-xl border border-zinc-200 px-3 py-1.5 text-xs font-semibold hover:bg-zinc-50">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('admin.ta.destroy',$i) }}" method="POST" onsubmit="return confirm('Hapus tahun ajaran ini?')" class="inline">
+                                                @csrf @method('DELETE')
+                                                <button type="submit"
+                                                    class="rounded-xl border border-rose-200 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-50">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 text-center text-gray-500">Belum ada data.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                {{ $items->links() }}
+            </div>
         </div>
-        <div class="mt-4 overflow-x-auto bg-white rounded shadow">
-            <table class="table-auto w-full">
-                <thead class="bg-gray-50 text-gray-700">
-                    <tr><th class="p-2 text-left">Nama</th><th class="p-2 text-left">Mulai</th><th class="p-2 text-left">Selesai</th><th class="p-2 text-left">Aktif</th><th class="p-2 text-left w-40">Aksi</th></tr>
-                </thead>
-                <tbody class="divide-y">
-                @forelse($items as $i)
-                    <tr class="hover:bg-gray-50">
-                        <td class="p-2">{{ $i->nama }}</td>
-                        <td class="p-2">{{ $i->tanggal_mulai }}</td>
-                        <td class="p-2">{{ $i->tanggal_selesai }}</td>
-                        <td class="p-2">{{ $i->aktif ? 'Ya' : 'Tidak' }}</td>
-                        <td class="p-2">
-                            <a class="inline-block text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-xs" href="{{ route('admin.ta.edit',$i) }}">Edit</a>
-                            <form action="{{ route('admin.ta.destroy',$i) }}" method="POST" class="inline">
-                                @csrf @method('DELETE')
-                                <button class="inline-block ml-2 text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-xs" onclick="return confirm('Hapus?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr><td colspan="5" class="p-6 text-center text-gray-500">Belum ada data.</td></tr>
-                @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-4">{{ $items->links() }}</div>
     </div>
 </x-app-layout>

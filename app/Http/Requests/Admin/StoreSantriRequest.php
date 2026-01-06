@@ -14,7 +14,7 @@ class StoreSantriRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nis' => 'required|string|max:30|unique:santris,nis',
+            'no_induk' => 'required|string|max:30|unique:santris,no_induk',
             'nama_lengkap' => 'required|string|max:120',
             'tgl_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',

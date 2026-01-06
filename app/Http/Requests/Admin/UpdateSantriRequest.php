@@ -8,7 +8,7 @@ class UpdateSantriRequest extends StoreSantriRequest
     {
         $id = $this->route('santri')?->id ?? null;
         return [
-            'nis' => "required|string|max:30|unique:santris,nis,$id",
+            'no_induk' => "required|string|max:30|unique:santris,no_induk,$id",
             'nama_lengkap' => 'required|string|max:120',
             'tgl_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',
