@@ -28,6 +28,10 @@ class UserController extends Controller
     public function store(StoreUserRequest $req)
     {
         $data = $req->validated();
+        if ($req->hasFile('foto')) {
+            $data['foto_path'] = $req->file('foto')->store('users', 'public');
+        }
+        unset($data['foto']);
         $pwd = $data['password'];
         $data['password'] = Hash::make($pwd);
         $user = User::create($data);
@@ -49,6 +53,10 @@ class UserController extends Controller
     public function update(UpdateUserRequest $req, User $user)
     {
         $data = $req->validated();
+        if ($req->hasFile('foto')) {
+            $data['foto_path'] = $req->file('foto')->store('users', 'public');
+        }
+        unset($data['foto']);
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         } else {

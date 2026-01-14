@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header"><h2>Periode Pengajaran (Semester)</h2></x-slot>
+    <x-slot name="header"><h2>Periode Pengajaran</h2></x-slot>
 
     <div class="min-h-screen bg-white py-6 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto space-y-4">
@@ -9,7 +9,7 @@
                 <div>
                     <p class="text-sm uppercase tracking-[0.3em] text-indigo-500 font-semibold">Kelola Periode</p>
                     <p class="text-3xl font-bold text-gray-900">Total {{ $items->total() }} Periode</p>
-                    <p class="text-sm text-gray-500 mt-1">Atur semester aktif dan rentang tanggal agar jadwal, nilai, dan laporan sesuai.</p>
+                    <p class="text-sm text-gray-500 mt-1">Atur periode pengajaran aktif dan rentang tanggal agar jadwal, nilai, dan laporan sesuai.</p>
                 </div>
                 <a href="{{ route('admin.semesters.create') }}"
                     class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800">

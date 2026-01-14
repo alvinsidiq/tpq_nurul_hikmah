@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // Akademik data
         $this->call(TahunAjaranSeeder::class);
         $this->call(SemesterSeeder::class);
+        $this->call(JilidSeeder::class);
         $this->call(MataPelajaranSeeder::class);
         $this->call(GuruSeeder::class);
         $this->call(KelasSeeder::class);

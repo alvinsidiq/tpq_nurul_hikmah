@@ -24,7 +24,7 @@
                             <tr class="bg-zinc-50 text-zinc-900">
                                 <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Kode</th>
                                 <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Nama</th>
-                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Level</th>
+                                <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Jilid</th>
                                 <th class="px-6 py-4 text-left text-[0.75rem] font-semibold tracking-[0.2em] uppercase">Aksi</th>
                             </tr>
                         </thead>
@@ -41,7 +41,7 @@
                                         <p class="text-xs text-gray-500">Kategori: {{ $i->kategori ?? '-' }}</p>
                                     </td>
                                     <td class="px-6 py-5 align-top">
-                                        <p class="text-sm font-medium text-gray-900">{{ $i->level_id ?? '-' }}</p>
+                                        <p class="text-sm font-medium text-gray-900">{{ $i->jilid?->nama ?? $i->level_id ?? '-' }}</p>
                                         <p class="text-xs text-gray-500">Jilid</p>
                                     </td>
                                     <td class="px-6 py-5 align-top">

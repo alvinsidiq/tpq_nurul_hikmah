@@ -43,7 +43,7 @@
                                     </td>
                                     <td class="px-6 py-5 align-top">
                                         <p class="text-sm font-medium text-gray-900">{{ $i->kelas?->nama_kelas ?? '-' }}</p>
-                                        <p class="text-xs text-gray-500">Level: {{ $i->kelas?->level_jilid ?? '-' }}</p>
+                                        <p class="text-xs text-gray-500">Jilid: {{ $i->kelas?->jilid?->nama ?? $i->kelas?->level_jilid ?? '-' }}</p>
                                     </td>
                                     <td class="px-6 py-5 align-top space-y-1">
                                         <p class="text-sm font-medium text-gray-900">{{ $i->wali?->name ?? '-' }}</p>
@@ -52,7 +52,7 @@
                                     </td>
                                     <td class="px-6 py-5 align-top">
                                         <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600">
-                                            {{ $i->jilid_level ?? '-' }}
+                                            {{ $i->jilid?->nama ?? $i->jilid_level ?? '-' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-5 align-top">

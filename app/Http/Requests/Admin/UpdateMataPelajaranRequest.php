@@ -10,7 +10,7 @@ class UpdateMataPelajaranRequest extends StoreMataPelajaranRequest
         return [
             'kode' => "required|string|max:20|unique:mata_pelajarans,kode,$id",
             'nama' => 'required|string|max:120',
-            'level_id' => 'nullable|integer|min:0',
+            'level_id' => 'nullable|exists:jilids,id',
         ];
     }
 }

@@ -25,7 +25,7 @@ class UpdateKelasSayaRequest extends FormRequest
         return [
             'deskripsi' => 'nullable|string',
             'kapasitas' => 'nullable|integer|min:1|max:100',
-            'level_jilid' => 'nullable|integer|min:0|max:50',
+            'jilid_id' => 'nullable|exists:jilids,id',
         ];
     }
 }

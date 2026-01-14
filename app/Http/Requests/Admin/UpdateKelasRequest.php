@@ -11,7 +11,7 @@ class UpdateKelasRequest extends StoreKelasRequest
             'nama_kelas' => "required|string|max:80|unique:kelas,nama_kelas,$id",
             'guru_id' => 'nullable|exists:users,id',
             'kapasitas' => 'required|integer|min:1|max:100',
-            'level_jilid' => 'nullable|integer|min:0|max:50',
+            'jilid_id' => 'nullable|exists:jilids,id',
         ];
     }
 }

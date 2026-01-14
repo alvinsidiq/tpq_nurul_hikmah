@@ -20,8 +20,8 @@
                             <p class="text-xl font-semibold text-zinc-900">{{ $kelas->kapasitas }} Santri</p>
                         </div>
                         <div>
-                            <p class="text-xs uppercase text-zinc-500">Level Jilid</p>
-                            <p class="text-xl font-semibold text-zinc-900">{{ $kelas->level_jilid ?? '-' }}</p>
+                            <p class="text-xs uppercase text-zinc-500">Jilid</p>
+                            <p class="text-xl font-semibold text-zinc-900">{{ $kelas->jilid?->nama ?? $kelas->level_jilid ?? '-' }}</p>
                         </div>
                         <div>
                             <p class="text-xs uppercase text-zinc-500">Deskripsi</p>
@@ -47,7 +47,12 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold uppercase tracking-widest text-zinc-600">Jilid</label>
-                            <input type="number" name="jilid_level" min="0" max="50" value="{{ $jilid ?? '' }}" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                            <select name="jilid_id" class="mt-1 w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                                <option value="">Semua</option>
+                                @foreach($jilids as $id => $nama)
+                                    <option value="{{ $id }}" @selected((string) $jilid === (string) $id)>{{ $nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                             <div class="flex items-end gap-2">
                                 <button class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800">Terapkan</button>
@@ -77,7 +82,9 @@
                                         <div class="text-xs text-zinc-500">{{ $s->jenis_kelamin ?? '' }}</div>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">{{ $s->jilid_level }}</span>
+                                        <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">
+                                            {{ $s->jilid?->nama ?? $s->jilid_level ?? '-' }}
+                                        </span>
                                     </td>
                                     <td class="px-4 py-3 text-sm text-zinc-700">{{ Str::limit($s->alamat, 80) }}</td>
                                 </tr>

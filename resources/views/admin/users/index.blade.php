@@ -59,13 +59,27 @@
                                     @endphp
                                     <tr class="border-b border-zinc-200 last:border-b-0">
                                         <td class="px-4 py-3">
-                                            <div class="font-medium">{{ $u->name }}</div>
-                                            <div class="text-xs text-zinc-500">ID: {{ $u->id }}</div>
+                                            <div class="flex items-center gap-3">
+                                                @if($u->foto_path)
+                                                    <img src="{{ asset('storage/'.$u->foto_path) }}" alt="Foto {{ $u->name }}" class="h-10 w-10 rounded-xl object-cover">
+                                                @else
+                                                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-sm font-semibold text-zinc-600">
+                                                        {{ Str::upper(Str::substr($u->name, 0, 1)) }}
+                                                    </div>
+                                                @endif
+                                                <div>
+                                                    <div class="font-medium">{{ $u->name }}</div>
+                                                    <div class="text-xs text-zinc-500">ID: {{ $u->id }}</div>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="text-sm font-medium text-zinc-800">{{ $u->email }}</div>
                                             @if($u->phone)
                                                 <div class="text-xs text-zinc-500">Telp: {{ $u->phone }}</div>
+                                            @endif
+                                            @if($u->alamat)
+                                                <div class="text-xs text-zinc-500">Alamat: {{ Str::limit($u->alamat, 60) }}</div>
                                             @endif
                                         </td>
                                         <td class="px-4 py-3">

@@ -15,7 +15,7 @@
                 <div class="p-4">
                     <div class="grid gap-3 text-sm text-zinc-700 md:grid-cols-2">
                         <div><span class="uppercase text-xs text-zinc-500">Mata Pelajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\MataPelajaran::find($mata_pelajaran_id)?->nama }}</p></div>
-                        <div><span class="uppercase text-xs text-zinc-500">Semester</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\Semester::find($semester_id)?->nama }}</p></div>
+                        <div><span class="uppercase text-xs text-zinc-500">Periode Pengajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\Semester::find($semester_id)?->nama }}</p></div>
                         <div><span class="uppercase text-xs text-zinc-500">Tahun Ajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\TahunAjaran::find($tahun_ajaran_id)?->nama }}</p></div>
                         <div><span class="uppercase text-xs text-zinc-500">Jenis & Tanggal</span><p class="text-base font-semibold text-zinc-900">{{ $jenis_penilaian }} • {{ $tanggal }}</p></div>
                     </div>

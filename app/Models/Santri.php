@@ -17,6 +17,11 @@ class Santri extends Model
         return $this->belongsTo(Kelas::class);
     }
 
+    public function jilid(): BelongsTo
+    {
+        return $this->belongsTo(Jilid::class);
+    }
+
     public function wali(): BelongsTo
     {
         return $this->belongsTo(User::class, 'wali_user_id');

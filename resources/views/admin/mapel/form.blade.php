@@ -29,8 +29,13 @@
                             <input name="kode" value="{{ old('kode', $item->kode) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-zinc-800">Level ID</label>
-                            <input type="number" min="0" name="level_id" value="{{ old('level_id', $item->level_id) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                            <label class="block text-sm font-semibold text-zinc-800">Jilid</label>
+                            <select name="level_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                                <option value="">-- Pilih --</option>
+                                @foreach($jilids as $id => $nama)
+                                    <option value="{{ $id }}" @selected(old('level_id', $item->level_id) == $id)>{{ $nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="space-y-2 md:col-span-2">
                             <label class="block text-sm font-semibold text-zinc-800">Nama</label>

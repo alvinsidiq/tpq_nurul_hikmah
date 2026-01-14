@@ -9,7 +9,7 @@
         </select>
     </div>
     <div class="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm focus-within:border-zinc-900 transition">
-        <label class="block text-xs font-semibold uppercase tracking-widest text-zinc-600">Semester</label>
+        <label class="block text-xs font-semibold uppercase tracking-widest text-zinc-600">Periode Pengajaran</label>
         <select name="semester_id" class="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-800 outline-none focus:border-zinc-900">
             <option value="">Semua</option>
             @foreach($semesters as $id=>$nama)

@@ -27,6 +27,8 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'phone' => 'nullable|string|max:30',
             'status' => 'required|in:active,inactive',
+            'alamat' => 'nullable|string',
+            'foto' => 'nullable|image|max:2048',
             'role' => 'required|in:admin,guru,wali_santri',
             'password' => 'required|min:8|confirmed',
         ];
