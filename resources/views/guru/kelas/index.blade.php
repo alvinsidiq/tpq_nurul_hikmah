@@ -14,7 +14,7 @@
                             <tr class="border-b border-zinc-200">
                                 <th class="px-4 py-3 text-left font-semibold">Nama Kelas</th>
                                 <th class="px-4 py-3 text-left font-semibold">Kapasitas</th>
-                                <th class="px-4 py-3 text-left font-semibold">Level Jilid</th>
+                                <th class="px-4 py-3 text-left font-semibold">Jilid</th>
                                 <th class="px-4 py-3 text-left font-semibold">Aksi</th>
                             </tr>
                         </thead>
@@ -29,7 +29,7 @@
                                     </td>
                                     <td class="px-4 py-3">
                                         <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">
-                                            {{ $i->level_jilid ?? '-' }}
+                                            {{ $i->jilid?->nama ?? $i->level_jilid ?? '-' }}
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">

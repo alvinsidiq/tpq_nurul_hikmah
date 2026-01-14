@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Guru\UpdateKelasSayaRequest;
+use App\Models\Jilid;
 use App\Models\Kelas;
 use App\Models\Santri;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class KelasSayaController extends Controller
 {
     public function index()
     {
-        $items = Kelas::where('guru_id', auth()->id())->orderBy('nama_kelas')->paginate(12);
+        $items = Kelas::with('jilid')->where('guru_id', auth()->id())->orderBy('nama_kelas')->paginate(12);
         return view('guru.kelas.index', compact('items'));
     }
 
@@ -20,9 +21,9 @@ class KelasSayaController extends Controller
     {
         $this->authorize('view', $kelas);
         $q = trim((string) $request->get('q'));
-        $jilid = $request->get('jilid_level');
+        $jilid = $request->get('jilid_id');
 
-        $santriQuery = Santri::where('kelas_id', $kelas->id);
+        $santriQuery = Santri::with('jilid')->where('kelas_id', $kelas->id);
         if ($q !== '') {
             $santriQuery->where(function ($sub) use ($q) {
                 $sub->where('nama_lengkap', 'like', "%$q%")
@@ -30,17 +31,19 @@ class KelasSayaController extends Controller
             });
         }
         if ($jilid !== null && $jilid !== '') {
-            $santriQuery->where('jilid_level', (int) $jilid);
+            $santriQuery->where('jilid_id', (int) $jilid);
         }
         $santri = $santriQuery->orderBy('nama_lengkap')->paginate(15)->withQueryString();
 
-        return view('guru.kelas.show', compact('kelas', 'santri', 'q', 'jilid'));
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
+        return view('guru.kelas.show', compact('kelas', 'santri', 'q', 'jilid', 'jilids'));
     }
 
     public function edit(Kelas $kelas)
     {
         $this->authorize('update', $kelas);
-        return view('guru.kelas.form', ['item' => $kelas]);
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
+        return view('guru.kelas.form', ['item' => $kelas, 'jilids' => $jilids]);
     }
 
     public function update(UpdateKelasSayaRequest $request, Kelas $kelas)

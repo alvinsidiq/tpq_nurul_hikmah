@@ -44,8 +44,13 @@
                             <input type="number" min="1" max="100" name="kapasitas" value="{{ old('kapasitas', $item->kapasitas ?? 30) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-zinc-800">Level Jilid</label>
-                            <input type="number" min="0" max="50" name="level_jilid" value="{{ old('level_jilid', $item->level_jilid) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                            <label class="block text-sm font-semibold text-zinc-800">Jilid</label>
+                            <select name="jilid_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                                <option value="">-- Pilih --</option>
+                                @foreach($jilids as $id => $nama)
+                                    <option value="{{ $id }}" @selected(old('jilid_id', $item->jilid_id) == $id)>{{ $nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 

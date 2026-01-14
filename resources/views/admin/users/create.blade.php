@@ -16,7 +16,7 @@
                     <div class="text-sm text-zinc-600">Halo, {{ $userName }}</div>
                 </div>
 
-                <form method="POST" action="{{ route('admin.users.store') }}" class="p-4 space-y-6">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.users.store') }}" class="p-4 space-y-6">
                     @csrf
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -32,12 +32,20 @@
                             <label class="block text-sm font-semibold text-zinc-800">Telepon</label>
                             <input name="phone" value="{{ old('phone') }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
                         </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="block text-sm font-semibold text-zinc-800">Alamat</label>
+                            <textarea name="alamat" rows="3" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">{{ old('alamat') }}</textarea>
+                        </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-zinc-800">Status</label>
                             <select name="status" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
                                 <option value="active" @selected(old('status')==='active')>Aktif</option>
                                 <option value="inactive" @selected(old('status')==='inactive')>Nonaktif</option>
                             </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-zinc-800">Foto</label>
+                            <input type="file" name="foto" accept="image/*" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
                         </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-zinc-800">Role</label>

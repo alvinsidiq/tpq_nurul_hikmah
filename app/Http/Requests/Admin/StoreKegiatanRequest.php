@@ -18,6 +18,7 @@ class StoreKegiatanRequest extends FormRequest
             'tanggal' => 'required|date',
             'lokasi' => 'nullable|string|max:180',
             'deskripsi' => 'nullable|string',
+            'foto' => 'nullable|image|max:2048',
             'notify' => 'nullable|boolean',
         ];
     }

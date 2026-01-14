@@ -17,7 +17,7 @@
                     <div class="text-sm text-zinc-600">Halo, {{ $userName }}</div>
                 </div>
 
-                <form method="POST" action="{{ $isEdit ? route('admin.kegiatan.update', $item) : route('admin.kegiatan.store') }}" class="p-4 space-y-6">
+                <form method="POST" enctype="multipart/form-data" action="{{ $isEdit ? route('admin.kegiatan.update', $item) : route('admin.kegiatan.store') }}" class="p-4 space-y-6">
                     @csrf
                     @if($isEdit)
                         @method('PUT')
@@ -38,6 +38,13 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-zinc-800">Deskripsi</label>
                         <textarea name="deskripsi" rows="4" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">{{ old('deskripsi', $item->deskripsi) }}</textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-zinc-800">Foto</label>
+                        <input type="file" name="foto" accept="image/*" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                        @if($item->foto_path)
+                            <img src="{{ asset('storage/'.$item->foto_path) }}" alt="Foto {{ $item->nama }}" class="mt-2 h-20 w-20 rounded-2xl object-cover">
+                        @endif
                     </div>
 
                     <div class="flex flex-col gap-3 border-t border-zinc-200 pt-4 sm:flex-row sm:items-center sm:justify-end">

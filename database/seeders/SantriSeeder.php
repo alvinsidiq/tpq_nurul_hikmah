@@ -18,10 +18,10 @@ class SantriSeeder extends Seeder
         }
 
         $data = [
-            ['no_induk' => 'S001', 'nama_lengkap' => 'Ahmad Fauzi', 'jilid_level' => 1],
-            ['no_induk' => 'S002', 'nama_lengkap' => 'Siti Aminah', 'jilid_level' => 2],
-            ['no_induk' => 'S003', 'nama_lengkap' => 'Budi Pratama', 'jilid_level' => 1],
-            ['no_induk' => 'S004', 'nama_lengkap' => 'Nur Aisyah', 'jilid_level' => 3],
+            ['no_induk' => 'S001', 'nama_lengkap' => 'Ahmad Fauzi', 'jilid_id' => 1, 'jilid_level' => 1],
+            ['no_induk' => 'S002', 'nama_lengkap' => 'Siti Aminah', 'jilid_id' => 2, 'jilid_level' => 2],
+            ['no_induk' => 'S003', 'nama_lengkap' => 'Budi Pratama', 'jilid_id' => 1, 'jilid_level' => 1],
+            ['no_induk' => 'S004', 'nama_lengkap' => 'Nur Aisyah', 'jilid_id' => 3, 'jilid_level' => 3],
         ];
 
         $i = 0;
@@ -37,6 +37,7 @@ class SantriSeeder extends Seeder
                     'alamat' => 'Alamat santri tidak diisi',
                     'kelas_id' => $kid,
                     'wali_user_id' => $wal,
+                    'jilid_id' => $s['jilid_id'],
                     'jilid_level' => $s['jilid_level'],
                 ]
             );

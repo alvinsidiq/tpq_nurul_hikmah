@@ -19,7 +19,7 @@
                 <div class="p-4 space-y-4">
                     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div class="text-sm text-zinc-600">
-                            Kelola kapasitas, wali kelas, dan level jilid dalam satu tempat.
+                            Kelola kapasitas, wali kelas, dan jilid dalam satu tempat.
                         </div>
                         <a href="{{ route('admin.kelas.create') }}"
                             class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800">
@@ -34,7 +34,7 @@
                                     <th class="w-[220px] px-4 py-3 text-left font-semibold">Nama Kelas</th>
                                     <th class="w-[200px] px-4 py-3 text-left font-semibold">Wali Kelas</th>
                                     <th class="w-[140px] px-4 py-3 text-left font-semibold">Kapasitas</th>
-                                    <th class="w-[140px] px-4 py-3 text-left font-semibold">Level Jilid</th>
+                                    <th class="w-[140px] px-4 py-3 text-left font-semibold">Jilid</th>
                                     <th class="w-[200px] px-4 py-3 text-left font-semibold">Aksi</th>
                                 </tr>
                             </thead>
@@ -56,7 +56,7 @@
                                         </td>
                                         <td class="px-4 py-3 align-top">
                                             <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600">
-                                                {{ $i->level_jilid ?? '-' }}
+                                                {{ $i->jilid?->nama ?? $i->level_jilid ?? '-' }}
                                             </span>
                                         </td>
                                         <td class="px-4 py-3 align-top">

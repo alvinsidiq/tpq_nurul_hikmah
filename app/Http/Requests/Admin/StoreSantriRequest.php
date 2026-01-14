@@ -20,7 +20,7 @@ class StoreSantriRequest extends FormRequest
             'alamat' => 'nullable|string',
             'kelas_id' => 'nullable|exists:kelas,id',
             'wali_user_id' => 'required|exists:users,id',
-            'jilid_level' => 'required|integer|min:0|max:50',
+            'jilid_id' => 'required|exists:jilids,id',
             'foto' => 'nullable|image|max:2048',
         ];
     }

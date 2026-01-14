@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSantriRequest;
 use App\Http\Requests\Admin\UpdateSantriRequest;
+use App\Models\Jilid;
 use App\Models\Kelas;
 use App\Models\Santri;
 use App\Models\User;
@@ -13,15 +14,16 @@ class SantriController extends Controller
 {
     public function index()
     {
-        $items = Santri::with(['kelas','wali'])->latest()->paginate(12);
+        $items = Santri::with(['kelas','wali','jilid'])->latest()->paginate(12);
         return view('admin.santri.index', compact('items'));
     }
 
     public function create()
     {
         $kelas = Kelas::orderBy('nama_kelas')->pluck('nama_kelas','id');
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
         $walis = User::role('wali_santri')->orderBy('name')->pluck('name','id');
-        return view('admin.santri.form', ['item' => new Santri(), 'kelas' => $kelas, 'walis' => $walis]);
+        return view('admin.santri.form', ['item' => new Santri(), 'kelas' => $kelas, 'jilids' => $jilids, 'walis' => $walis]);
     }
 
     public function store(StoreSantriRequest $r)
@@ -38,8 +40,9 @@ class SantriController extends Controller
     public function edit(Santri $santri)
     {
         $kelas = Kelas::orderBy('nama_kelas')->pluck('nama_kelas','id');
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
         $walis = User::role('wali_santri')->orderBy('name')->pluck('name','id');
-        return view('admin.santri.form', ['item' => $santri, 'kelas' => $kelas, 'walis' => $walis]);
+        return view('admin.santri.form', ['item' => $santri, 'kelas' => $kelas, 'jilids' => $jilids, 'walis' => $walis]);
     }
 
     public function update(UpdateSantriRequest $r, Santri $santri)

@@ -16,7 +16,7 @@
                     <div class="text-sm text-zinc-600">Halo, {{ $userName }}</div>
                 </div>
 
-                <form method="POST" action="{{ route('admin.users.update', $user) }}" class="p-4 space-y-6">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('admin.users.update', $user) }}" class="p-4 space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -33,12 +33,23 @@
                             <label class="block text-sm font-semibold text-zinc-800">Telepon</label>
                             <input name="phone" value="{{ old('phone', $user->phone) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
                         </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="block text-sm font-semibold text-zinc-800">Alamat</label>
+                            <textarea name="alamat" rows="3" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">{{ old('alamat', $user->alamat) }}</textarea>
+                        </div>
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-zinc-800">Status</label>
                             <select name="status" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
                                 <option value="active" @selected(old('status', $user->status)==='active')>Aktif</option>
                                 <option value="inactive" @selected(old('status', $user->status)==='inactive')>Nonaktif</option>
                             </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-zinc-800">Foto</label>
+                            <input type="file" name="foto" accept="image/*" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
+                            @if($user->foto_path)
+                                <img src="{{ asset('storage/'.$user->foto_path) }}" alt="Foto {{ $user->name }}" class="mt-2 h-16 w-16 rounded-2xl object-cover">
+                            @endif
                         </div>
                         <div class="space-y-2 md:col-span-2">
                             <label class="block text-sm font-semibold text-zinc-800">Role</label>

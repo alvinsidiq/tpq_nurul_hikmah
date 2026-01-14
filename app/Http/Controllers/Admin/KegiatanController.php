@@ -25,7 +25,12 @@ class KegiatanController extends Controller
 
     public function store(StoreKegiatanRequest $r)
     {
-        $k = Kegiatan::create($r->validated());
+        $data = $r->validated();
+        if ($r->hasFile('foto')) {
+            $data['foto_path'] = $r->file('foto')->store('kegiatan', 'public');
+        }
+        unset($data['foto']);
+        $k = Kegiatan::create($data);
 
         // Notifikasi email dinonaktifkan
 
@@ -39,7 +44,12 @@ class KegiatanController extends Controller
 
     public function update(UpdateKegiatanRequest $r, Kegiatan $kegiatan)
     {
-        $kegiatan->update($r->validated());
+        $data = $r->validated();
+        if ($r->hasFile('foto')) {
+            $data['foto_path'] = $r->file('foto')->store('kegiatan', 'public');
+        }
+        unset($data['foto']);
+        $kegiatan->update($data);
 
         // Notifikasi email dinonaktifkan
 

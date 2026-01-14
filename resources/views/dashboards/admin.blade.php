@@ -31,11 +31,6 @@
                 'href' => route('admin.kelas.index'),
                 'active' => request()->routeIs('admin.kelas.*'),
             ],
-            [
-                'label' => 'Data Guru',
-                'href' => route('admin.guru.index'),
-                'active' => request()->routeIs('admin.guru.*'),
-            ],
                     [
                         'label' => 'Data Santri',
                         'href' => route('admin.santri.index'),
@@ -47,7 +42,7 @@
                         'active' => request()->routeIs('admin.kegiatan.*'),
                     ],
             [
-                'label' => 'Kelola Laporan',
+                'label' => 'Laporan',
                 'href' => route('admin.reports.kehadiran'),
                 'active' => request()->routeIs('admin.reports.*'),
             ],

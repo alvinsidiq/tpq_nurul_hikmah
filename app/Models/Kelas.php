@@ -16,6 +16,11 @@ class Kelas extends Model
         return $this->belongsTo(User::class, 'guru_id');
     }
 
+    public function jilid(): BelongsTo
+    {
+        return $this->belongsTo(Jilid::class);
+    }
+
     public function santris(): HasMany
     {
         return $this->hasMany(Santri::class);

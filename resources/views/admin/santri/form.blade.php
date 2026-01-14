@@ -40,8 +40,12 @@
                             <input type="date" name="tgl_lahir" value="{{ old('tgl_lahir', $item->tgl_lahir) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-zinc-800">Jilid Level</label>
-                            <input type="number" min="0" max="50" name="jilid_level" value="{{ old('jilid_level', $item->jilid_level ?? 0) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
+                            <label class="block text-sm font-semibold text-zinc-800">Jilid</label>
+                            <select name="jilid_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
+                                @foreach($jilids as $id => $nama)
+                                    <option value="{{ $id }}" @selected(old('jilid_id', $item->jilid_id) == $id)>{{ $nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 

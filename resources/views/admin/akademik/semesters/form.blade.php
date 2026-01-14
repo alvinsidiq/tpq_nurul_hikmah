@@ -12,7 +12,7 @@
                 <div class="flex flex-col gap-2 border-b border-zinc-200 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <div class="text-lg font-semibold">{{ $isEdit ? 'Edit Periode Pengajaran' : 'Tambah Periode Pengajaran' }}</div>
-                        <div class="text-sm text-zinc-600">{{ $isEdit ? $item->nama : 'Lengkapi data semester/periode' }}</div>
+                        <div class="text-sm text-zinc-600">{{ $isEdit ? $item->nama : 'Lengkapi data periode pengajaran' }}</div>
                     </div>
                     <div class="text-sm text-zinc-600">Halo, {{ $userName }}</div>
                 </div>
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-zinc-800">Nama Semester</label>
+                        <label class="block text-sm font-semibold text-zinc-800">Nama Periode Pengajaran</label>
                         <input name="nama" value="{{ old('nama', $item->nama) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" required>
                         <x-input-error :messages="$errors->get('nama')" class="mt-1" />
                     </div>

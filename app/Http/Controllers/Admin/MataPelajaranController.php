@@ -6,19 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreMataPelajaranRequest;
 use App\Http\Requests\Admin\UpdateMataPelajaranRequest;
 use App\Models\ActivityLog;
+use App\Models\Jilid;
 use App\Models\MataPelajaran;
 
 class MataPelajaranController extends Controller
 {
     public function index()
     {
-        $items = MataPelajaran::latest()->paginate(10);
+        $items = MataPelajaran::with('jilid')->latest()->paginate(10);
         return view('admin.mapel.index', compact('items'));
     }
 
     public function create()
     {
-        return view('admin.mapel.form', ['item' => new MataPelajaran()]);
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
+        return view('admin.mapel.form', ['item' => new MataPelajaran(), 'jilids' => $jilids]);
     }
 
     public function store(StoreMataPelajaranRequest $r)
@@ -30,7 +32,8 @@ class MataPelajaranController extends Controller
 
     public function edit(MataPelajaran $mapel)
     {
-        return view('admin.mapel.form', ['item' => $mapel]);
+        $jilids = Jilid::orderBy('urutan')->pluck('nama', 'id');
+        return view('admin.mapel.form', ['item' => $mapel, 'jilids' => $jilids]);
     }
 
     public function update(UpdateMataPelajaranRequest $r, MataPelajaran $mapel)

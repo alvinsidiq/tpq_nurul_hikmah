@@ -74,9 +74,6 @@ Route::middleware(['auth','verified','role:admin'])->name('admin.')->prefix('adm
 
     Route::resource('semesters', \App\Http\Controllers\Admin\SemesterController::class);
 
-    // Data Guru
-    Route::resource('guru', \App\Http\Controllers\Admin\GuruController::class);
-
     // Data Santri
     Route::resource('santri', \App\Http\Controllers\Admin\SantriController::class);
     

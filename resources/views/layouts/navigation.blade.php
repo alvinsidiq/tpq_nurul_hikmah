@@ -44,10 +44,10 @@
                         {{ __('Jadwal') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.reports.kehadiran')" :active="request()->routeIs('admin.reports.*')">
-                        {{ __('Kelola Laporan') }}
+                        {{ __('Laporan') }}
                     </x-nav-link>
                     @php
-                        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.guru.*');
+                        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
                         $akClasses = $akActive
                             ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
                             : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out';
@@ -73,9 +73,6 @@
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                                 {{ __('Data Kelas') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.guru.index')" :active="request()->routeIs('admin.guru.*')">
-                                {{ __('Data Guru') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
@@ -180,10 +177,10 @@
                 {{ __('Jadwal') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.reports.kehadiran')" :active="request()->routeIs('admin.reports.*')">
-                {{ __('Kelola Laporan') }}
+                {{ __('Laporan') }}
             </x-responsive-nav-link>
             @php
-                $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.guru.*');
+                $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
             @endphp
             <div x-data="{ openAk: false }">
                 <button @click="openAk = !openAk"
@@ -205,9 +202,6 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                         {{ __('Data Kelas') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.guru.index')" :active="request()->routeIs('admin.guru.*')">
-                        {{ __('Data Guru') }}
                     </x-responsive-nav-link>
                 </div>
             </div>
@@ -271,7 +265,7 @@
 
 @if($adminSidebarEnabled)
     @php
-        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*') || request()->routeIs('admin.guru.*');
+        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
 
         $adminMenu = [
             [
@@ -311,11 +305,6 @@
                         'href' => route('admin.kelas.index'),
                         'active' => request()->routeIs('admin.kelas.*'),
                     ],
-                    [
-                        'label' => __('Data Guru'),
-                        'href' => route('admin.guru.index'),
-                        'active' => request()->routeIs('admin.guru.*'),
-                    ],
                 ],
             ],
             [
@@ -332,7 +321,7 @@
             ],
             [
                 'type' => 'link',
-                'label' => __('Kelola Laporan'),
+                'label' => __('Laporan'),
                 'href' => route('admin.reports.kehadiran'),
                 'active' => request()->routeIs('admin.reports.*'),
             ],

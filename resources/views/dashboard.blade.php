@@ -9,10 +9,6 @@
                 <div class="text-sm text-gray-500">Pengguna</div>
                 <div class="text-2xl font-semibold">{{ \App\Models\User::count() }}</div>
             </a>
-            <a href="{{ route('admin.guru.index') }}" class="block bg-white rounded shadow p-4 hover:shadow-md transition">
-                <div class="text-sm text-gray-500">Data Guru</div>
-                <div class="text-2xl font-semibold">{{ \App\Models\Guru::count() }}</div>
-            </a>
             <a href="{{ route('admin.santri.index') }}" class="block bg-white rounded shadow p-4 hover:shadow-md transition">
                 <div class="text-sm text-gray-500">Data Santri</div>
                 <div class="text-2xl font-semibold">{{ \App\Models\Santri::count() }}</div>

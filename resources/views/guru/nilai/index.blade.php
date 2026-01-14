@@ -44,7 +44,7 @@
                                 <th class="px-4 py-3 text-left font-semibold">Tanggal</th>
                                 <th class="px-4 py-3 text-left font-semibold">Kelas</th>
                                 <th class="px-4 py-3 text-left font-semibold">Mapel</th>
-                                <th class="px-4 py-3 text-left font-semibold">Semester / TA</th>
+                                <th class="px-4 py-3 text-left font-semibold">Periode Pengajaran / TA</th>
                                 <th class="px-4 py-3 text-left font-semibold">Jenis</th>
                                 <th class="px-4 py-3 text-left font-semibold">Total</th>
                                 <th class="px-4 py-3 text-left font-semibold">Aksi</th>
