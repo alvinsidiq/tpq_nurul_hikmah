@@ -5,8 +5,8 @@
 
             <div class="rounded-2xl border border-zinc-200 shadow-sm">
                 <div class="flex flex-col gap-2 border-b border-zinc-200 p-4">
-                    <div class="text-lg font-semibold">Kelas Saya</div>
-                    <div class="text-sm text-zinc-600">Kelas yang Anda ampu</div>
+                    <div class="text-lg font-semibold">Kelas Wali</div>
+                    <div class="text-sm text-zinc-600">Daftar kelas wali yang Anda pegang. Untuk kelas yang diajar sebagai guru mapel, lihat menu Mata Pelajaran.</div>
                 </div>
                 <div class="overflow-hidden rounded-2xl border border-zinc-200 m-4">
                     <table class="w-full text-sm">

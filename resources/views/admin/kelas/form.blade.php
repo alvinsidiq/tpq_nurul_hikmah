@@ -29,13 +29,14 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-zinc-800">Wali Kelas (Guru)</label>
+                        <label class="block text-sm font-semibold text-zinc-800">Wali Kelas (Opsional)</label>
                         <select name="guru_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900">
                             <option value="">-- Pilih --</option>
                             @foreach($gurus as $id=>$name)
                                 <option value="{{ $id }}" @selected(old('guru_id', $item->guru_id)==$id)>{{ $name }}</option>
                             @endforeach
                         </select>
+                        <p class="text-xs text-zinc-500">Guru pengajar mapel diatur melalui menu Jadwal.</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">

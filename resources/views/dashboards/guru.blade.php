@@ -9,6 +9,12 @@
                 'cta' => 'Buka Kelas',
             ],
             [
+                'title' => 'Mata Pelajaran',
+                'desc' => 'Lihat mapel dan kelas yang Anda ajar.',
+                'href' => route('guru.mapel.index'),
+                'cta' => 'Lihat Mapel',
+            ],
+            [
                 'title' => 'Kehadiran',
                 'desc' => 'Catat status santri untuk setiap pertemuan.',
                 'href' => route('guru.kehadiran.index'),
@@ -16,7 +22,7 @@
             ],
             [
                 'title' => 'Nilai',
-                'desc' => 'Input nilai UH, UTS, UAS, atau praktik.',
+                'desc' => 'Input nilai tugas mingguan, tengah periode, dan akhir periode.',
                 'href' => route('guru.nilai.index'),
                 'cta' => 'Input Nilai',
             ],
@@ -35,7 +41,7 @@
                 </div>
 
                 <div class="p-4 space-y-4">
-                    <div class="grid gap-3 md:grid-cols-3">
+                    <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
                         @foreach($cards as $c)
                             <div class="rounded-2xl border border-zinc-200 p-4 shadow-sm">
                                 <div class="text-base font-semibold">{{ $c['title'] }}</div>

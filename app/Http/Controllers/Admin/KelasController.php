@@ -8,12 +8,17 @@ use App\Http\Requests\Admin\UpdateKelasRequest;
 use App\Models\Jilid;
 use App\Models\Kelas;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class KelasController extends Controller
 {
     public function index()
     {
-        $items = Kelas::with(['waliKelas', 'jilid'])->paginate(12);
+        $items = Kelas::with(['waliKelas', 'jilid'])
+            ->withCount([
+                'jadwals as pengajar_count' => fn ($q) => $q->select(DB::raw('COUNT(DISTINCT guru_id)')),
+            ])
+            ->paginate(12);
         return view('admin.akademik.kelas.index', compact('items'));
     }
 

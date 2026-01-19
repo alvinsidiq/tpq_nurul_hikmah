@@ -19,7 +19,7 @@
                 <div class="p-4 space-y-4">
                     <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div class="text-sm text-zinc-600">
-                            Kelola kapasitas, wali kelas, dan jilid dalam satu tempat.
+                            Kelola kapasitas, wali kelas (opsional), jilid, dan pengajar mapel melalui jadwal.
                         </div>
                         <a href="{{ route('admin.kelas.create') }}"
                             class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800">
@@ -32,7 +32,8 @@
                             <thead class="bg-zinc-50">
                                 <tr class="border-b border-zinc-200">
                                     <th class="w-[220px] px-4 py-3 text-left font-semibold">Nama Kelas</th>
-                                    <th class="w-[200px] px-4 py-3 text-left font-semibold">Wali Kelas</th>
+                                    <th class="w-[200px] px-4 py-3 text-left font-semibold">Wali Kelas (Opsional)</th>
+                                    <th class="w-[160px] px-4 py-3 text-left font-semibold">Pengajar Mapel</th>
                                     <th class="w-[140px] px-4 py-3 text-left font-semibold">Kapasitas</th>
                                     <th class="w-[140px] px-4 py-3 text-left font-semibold">Jilid</th>
                                     <th class="w-[200px] px-4 py-3 text-left font-semibold">Aksi</th>
@@ -48,6 +49,10 @@
                                         <td class="px-4 py-3 align-top">
                                             <div class="text-sm font-medium text-zinc-800">{{ $i->waliKelas?->name ?? '-' }}</div>
                                             <div class="text-xs text-zinc-500">{{ $i->waliKelas?->phone ?? '' }}</div>
+                                        </td>
+                                        <td class="px-4 py-3 align-top">
+                                            <div class="text-sm font-medium text-zinc-800">{{ $i->pengajar_count ?? 0 }} Guru</div>
+                                            <a href="{{ route('admin.jadwal.index') }}" class="text-xs text-zinc-500 hover:text-zinc-700">Atur di Jadwal</a>
                                         </td>
                                         <td class="px-4 py-3 align-top">
                                             <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">
@@ -77,7 +82,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-4 py-10 text-center text-sm text-zinc-500">Belum ada data kelas.</td>
+                                        <td colspan="6" class="px-4 py-10 text-center text-sm text-zinc-500">Belum ada data kelas.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
