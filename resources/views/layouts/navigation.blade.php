@@ -47,7 +47,7 @@
                         {{ __('Laporan') }}
                     </x-nav-link>
                     @php
-                        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
+                        $akActive = request()->routeIs('admin.akademik.*') || request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
                         $akClasses = $akActive
                             ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
                             : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out';
@@ -62,14 +62,17 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('admin.akademik.flow')" :active="request()->routeIs('admin.akademik.*')">
+                                {{ __('Flow Akademik') }}
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('admin.ta.index')" :active="request()->routeIs('admin.ta.*')">
                                 {{ __('Tahun Ajaran') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('admin.mapel.index')" :active="request()->routeIs('admin.mapel.*')">
-                                {{ __('Mata Pelajaran') }}
-                            </x-dropdown-link>
                             <x-dropdown-link :href="route('admin.semesters.index')" :active="request()->routeIs('admin.semesters.*')">
                                 {{ __('Periode Pengajaran') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('admin.mapel.index')" :active="request()->routeIs('admin.mapel.*')">
+                                {{ __('Mata Pelajaran') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                                 {{ __('Data Kelas') }}
@@ -83,6 +86,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('guru.kelas.index')" :active="request()->routeIs('guru.kelas.*')">
                         {{ __('Kelas Saya') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('guru.mapel.index')" :active="request()->routeIs('guru.mapel.*')">
+                        {{ __('Mata Pelajaran') }}
                     </x-nav-link>
                     <x-nav-link :href="route('guru.kehadiran.index')" :active="request()->routeIs('guru.kehadiran.*')">
                         {{ __('Kelola Kehadiran') }}
@@ -180,7 +186,7 @@
                 {{ __('Laporan') }}
             </x-responsive-nav-link>
             @php
-                $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
+                $akActive = request()->routeIs('admin.akademik.*') || request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
             @endphp
             <div x-data="{ openAk: false }">
                 <button @click="openAk = !openAk"
@@ -191,14 +197,17 @@
                     </svg>
                 </button>
                 <div x-show="openAk" class="space-y-1 pb-2" x-cloak>
+                    <x-responsive-nav-link :href="route('admin.akademik.flow')" :active="request()->routeIs('admin.akademik.*')">
+                        {{ __('Flow Akademik') }}
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.ta.index')" :active="request()->routeIs('admin.ta.*')">
                         {{ __('Tahun Ajaran') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.mapel.index')" :active="request()->routeIs('admin.mapel.*')">
-                        {{ __('Mata Pelajaran') }}
-                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.semesters.index')" :active="request()->routeIs('admin.semesters.*')">
                         {{ __('Periode Pengajaran') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.mapel.index')" :active="request()->routeIs('admin.mapel.*')">
+                        {{ __('Mata Pelajaran') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.kelas.index')" :active="request()->routeIs('admin.kelas.*')">
                         {{ __('Data Kelas') }}
@@ -212,6 +221,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('guru.kelas.index')" :active="request()->routeIs('guru.kelas.*')">
                 {{ __('Kelas Saya') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('guru.mapel.index')" :active="request()->routeIs('guru.mapel.*')">
+                {{ __('Mata Pelajaran') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('guru.kehadiran.index')" :active="request()->routeIs('guru.kehadiran.*')">
                 {{ __('Kelola Kehadiran') }}
@@ -265,7 +277,7 @@
 
 @if($adminSidebarEnabled)
     @php
-        $akActive = request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
+        $akActive = request()->routeIs('admin.akademik.*') || request()->routeIs('admin.ta.*') || request()->routeIs('admin.semesters.*') || request()->routeIs('admin.mapel.*') || request()->routeIs('admin.kelas.*');
 
         $adminMenu = [
             [
@@ -286,19 +298,24 @@
                 'active' => $akActive,
                 'children' => [
                     [
+                        'label' => __('Flow Akademik'),
+                        'href' => route('admin.akademik.flow'),
+                        'active' => request()->routeIs('admin.akademik.*'),
+                    ],
+                    [
                         'label' => __('Tahun Ajaran'),
                         'href' => route('admin.ta.index'),
                         'active' => request()->routeIs('admin.ta.*'),
                     ],
                     [
-                        'label' => __('Mata Pelajaran'),
-                        'href' => route('admin.mapel.index'),
-                        'active' => request()->routeIs('admin.mapel.*'),
-                    ],
-                    [
                         'label' => __('Periode Pengajaran'),
                         'href' => route('admin.semesters.index'),
                         'active' => request()->routeIs('admin.semesters.*'),
+                    ],
+                    [
+                        'label' => __('Mata Pelajaran'),
+                        'href' => route('admin.mapel.index'),
+                        'active' => request()->routeIs('admin.mapel.*'),
                     ],
                     [
                         'label' => __('Data Kelas'),
@@ -312,6 +329,12 @@
                 'label' => __('Data Santri'),
                 'href' => route('admin.santri.index'),
                 'active' => request()->routeIs('admin.santri.*'),
+            ],
+            [
+                'type' => 'link',
+                'label' => __('Jadwal'),
+                'href' => route('admin.jadwal.index'),
+                'active' => request()->routeIs('admin.jadwal.*'),
             ],
             [
                 'type' => 'link',
@@ -408,6 +431,11 @@
                 'label' => __('Kelas Saya'),
                 'href' => route('guru.kelas.index'),
                 'active' => request()->routeIs('guru.kelas.*'),
+            ],
+            [
+                'label' => __('Mata Pelajaran'),
+                'href' => route('guru.mapel.index'),
+                'active' => request()->routeIs('guru.mapel.*'),
             ],
             [
                 'label' => __('Kelola Kehadiran'),

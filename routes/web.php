@@ -38,8 +38,12 @@ Route::middleware(['auth','verified','role:admin|guru'])->group(function(){
 
         // Nilai
         Route::get('nilai', [\App\Http\Controllers\Guru\NilaiController::class, 'index'])->name('nilai.index');
+        Route::get('nilai/mulai', [\App\Http\Controllers\Guru\NilaiController::class, 'start'])->name('nilai.start');
         Route::get('nilai/kelas/{kelas}', [\App\Http\Controllers\Guru\NilaiController::class, 'form'])->name('nilai.form');
         Route::post('nilai/kelas/{kelas}', [\App\Http\Controllers\Guru\NilaiController::class, 'store'])->name('nilai.store');
+
+        // Mata Pelajaran
+        Route::get('mata-pelajaran', [\App\Http\Controllers\Guru\MataPelajaranController::class, 'index'])->name('mapel.index');
 
         // Kenaikan Jilid
         Route::get('kenaikan-jilid', [\App\Http\Controllers\Guru\KenaikanJilidController::class, 'index'])->name('kenaikan.index');
@@ -73,6 +77,9 @@ Route::middleware(['auth','verified','role:admin'])->name('admin.')->prefix('adm
     Route::resource('kelas', \App\Http\Controllers\Admin\KelasController::class);
 
     Route::resource('semesters', \App\Http\Controllers\Admin\SemesterController::class);
+    Route::get('akademik/flow', function () {
+        return view('admin.akademik.flow');
+    })->name('akademik.flow');
 
     // Data Santri
     Route::resource('santri', \App\Http\Controllers\Admin\SantriController::class);

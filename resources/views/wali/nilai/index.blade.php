@@ -1,4 +1,5 @@
 <x-app-layout>
+    @php($jenisLabels = \App\Models\Nilai::jenisPenilaianLabels())
     <div class="min-h-screen bg-white text-zinc-900">
         <div class="mx-auto max-w-6xl p-6 space-y-4">
             <x-flash/>
@@ -37,7 +38,7 @@
                                     <td class="px-4 py-3">{{ $n->santri?->nama_lengkap ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $n->mapel?->nama ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $n->semester?->nama ?? '-' }} / {{ $n->tahunAjaran?->nama ?? '-' }}</td>
-                                    <td class="px-4 py-3">{{ $n->jenis_penilaian }}</td>
+                                    <td class="px-4 py-3">{{ $jenisLabels[$n->jenis_penilaian] ?? $n->jenis_penilaian }}</td>
                                     <td class="px-4 py-3">
                                         <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">{{ $n->skor }}</span>
                                     </td>

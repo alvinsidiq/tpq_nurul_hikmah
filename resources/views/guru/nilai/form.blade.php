@@ -1,4 +1,10 @@
 <x-app-layout>
+    @php
+        $jenisLabels = \App\Models\Nilai::jenisPenilaianLabels();
+        $jenisUtama = \App\Models\Nilai::jenisPenilaianOptions();
+        $bobot = \App\Models\Nilai::bobotPenilaian();
+        $jenisLabel = $jenisLabels[$jenis_penilaian] ?? $jenis_penilaian;
+    @endphp
     <div class="min-h-screen bg-white text-zinc-900">
         <div class="mx-auto max-w-6xl p-6 space-y-4">
             <x-flash/>
@@ -17,7 +23,7 @@
                         <div><span class="uppercase text-xs text-zinc-500">Mata Pelajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\MataPelajaran::find($mata_pelajaran_id)?->nama }}</p></div>
                         <div><span class="uppercase text-xs text-zinc-500">Periode Pengajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\Semester::find($semester_id)?->nama }}</p></div>
                         <div><span class="uppercase text-xs text-zinc-500">Tahun Ajaran</span><p class="text-base font-semibold text-zinc-900">{{ \App\Models\TahunAjaran::find($tahun_ajaran_id)?->nama }}</p></div>
-                        <div><span class="uppercase text-xs text-zinc-500">Jenis & Tanggal</span><p class="text-base font-semibold text-zinc-900">{{ $jenis_penilaian }} • {{ $tanggal }}</p></div>
+                        <div><span class="uppercase text-xs text-zinc-500">Jenis & Tanggal</span><p class="text-base font-semibold text-zinc-900">{{ $jenisLabel }} • {{ $tanggal }}</p></div>
                     </div>
 
                     <form method="POST" action="{{ route('guru.nilai.store', $kelas) }}" class="mt-6 space-y-6">
@@ -28,8 +34,13 @@
                         <input type="hidden" name="jenis_penilaian" value="{{ $jenis_penilaian }}">
                         <input type="hidden" name="tanggal" value="{{ $tanggal }}">
 
-                        <div class="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
-                            Penilaian dibagi 4 kategori: Tilawah, Tajwid, Hafalan, dan Adab. Isi angka (0-100) sesuai performa santri. Rata-rata otomatis disimpan sebagai nilai akhir, detail kategori dicatat di catatan.
+                        <div class="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800 space-y-1">
+                            <div>Isi nilai 0-100 sesuai performa santri untuk mata pelajaran ini.</div>
+                            <div>Nilai akhir mapel dihitung dari bobot:
+                                @foreach($jenisUtama as $key => $label)
+                                    <span class="font-semibold">{{ $label }} {{ (int) round(($bobot[$key] ?? 0) * 100) }}%</span>@if(!$loop->last),@endif
+                                @endforeach
+                            </div>
                         </div>
 
                         <div class="overflow-hidden rounded-2xl border border-zinc-200">
@@ -38,10 +49,7 @@
                                     <tr class="border-b border-zinc-200">
                                         <th class="px-4 py-3 text-left font-semibold">Nomor Induk</th>
                                         <th class="px-4 py-3 text-left font-semibold">Nama Santri</th>
-                                        <th class="px-4 py-3 text-left font-semibold">Tilawah</th>
-                                        <th class="px-4 py-3 text-left font-semibold">Tajwid</th>
-                                        <th class="px-4 py-3 text-left font-semibold">Hafalan</th>
-                                        <th class="px-4 py-3 text-left font-semibold">Adab</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Nilai</th>
                                         <th class="px-4 py-3 text-left font-semibold">Catatan</th>
                                     </tr>
                                 </thead>
@@ -56,19 +64,10 @@
                                             <div class="text-sm font-semibold text-zinc-900">{{ $s->nama_lengkap }}</div>
                                         </td>
                                         <td class="px-4 py-3">
-                                            <input type="number" step="0.01" min="0" max="100" name="tilawah[{{ $s->id }}]" value="{{ $rec->skor ?? '' }}" class="w-24 rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="0-100">
+                                            <input type="number" step="0.01" min="0" max="100" name="skor[{{ $s->id }}]" value="{{ old('skor.'.$s->id, $rec->skor ?? '') }}" class="w-24 rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="0-100">
                                         </td>
                                         <td class="px-4 py-3">
-                                            <input type="number" step="0.01" min="0" max="100" name="tajwid[{{ $s->id }}]" value="" class="w-24 rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="0-100">
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <input type="number" step="0.01" min="0" max="100" name="hafalan[{{ $s->id }}]" value="" class="w-24 rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="0-100">
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <input type="number" step="0.01" min="0" max="100" name="adab[{{ $s->id }}]" value="" class="w-24 rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="0-100">
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <input name="catatan[{{ $s->id }}]" value="{{ $rec->catatan ?? '' }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="Catatan opsional">
+                                            <input name="catatan[{{ $s->id }}]" value="{{ old('catatan.'.$s->id, $rec->catatan ?? '') }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" placeholder="Catatan opsional">
                                         </td>
                                     </tr>
                                     @endforeach

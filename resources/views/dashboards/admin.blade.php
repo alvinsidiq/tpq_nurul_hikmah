@@ -13,13 +13,18 @@
             ],
             [
                 'label' => 'Data Akademik',
-                'href' => route('admin.semesters.index'),
-                'active' => request()->routeIs('admin.semesters.*'),
+                'href' => route('admin.akademik.flow'),
+                'active' => request()->routeIs('admin.akademik.*'),
             ],
             [
                 'label' => 'Tahun Ajaran',
                 'href' => route('admin.ta.index'),
                 'active' => request()->routeIs('admin.ta.*'),
+            ],
+            [
+                'label' => 'Periode Pengajaran',
+                'href' => route('admin.semesters.index'),
+                'active' => request()->routeIs('admin.semesters.*'),
             ],
             [
                 'label' => 'Mata Pelajaran',
@@ -31,16 +36,21 @@
                 'href' => route('admin.kelas.index'),
                 'active' => request()->routeIs('admin.kelas.*'),
             ],
-                    [
-                        'label' => 'Data Santri',
-                        'href' => route('admin.santri.index'),
-                        'active' => request()->routeIs('admin.santri.*'),
-                    ],
-                    [
-                        'label' => 'Kegiatan TPQ',
-                        'href' => route('admin.kegiatan.index'),
-                        'active' => request()->routeIs('admin.kegiatan.*'),
-                    ],
+            [
+                'label' => 'Jadwal',
+                'href' => route('admin.jadwal.index'),
+                'active' => request()->routeIs('admin.jadwal.*'),
+            ],
+            [
+                'label' => 'Data Santri',
+                'href' => route('admin.santri.index'),
+                'active' => request()->routeIs('admin.santri.*'),
+            ],
+            [
+                'label' => 'Kegiatan TPQ',
+                'href' => route('admin.kegiatan.index'),
+                'active' => request()->routeIs('admin.kegiatan.*'),
+            ],
             [
                 'label' => 'Laporan',
                 'href' => route('admin.reports.kehadiran'),

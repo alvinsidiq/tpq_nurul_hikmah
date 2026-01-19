@@ -4,27 +4,90 @@
             <x-flash/>
 
             <div class="rounded-2xl border border-zinc-200 shadow-sm">
-                @php
-                    $firstKelas = $kelas->keys()->first();
-                    $firstMapel = $mapels->keys()->first();
-                    $firstSemester = $semesters->keys()->first();
-                    $firstTa = $tahunAjarans->keys()->first();
-                @endphp
                 <div class="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <div class="text-lg font-semibold">Kelola Nilai</div>
-                        <div class="text-sm text-zinc-600">Riwayat penilaian dan tambah nilai baru</div>
+                        <div class="text-lg font-semibold">Mulai Penilaian</div>
+                        <div class="text-sm text-zinc-600">Nilai hanya dapat diisi oleh guru mapel yang mengampu.</div>
                     </div>
                     <div class="flex flex-wrap gap-2 text-sm text-zinc-600">
                         <span>Halo, {{ auth()->user()->name ?? 'Guru' }}</span>
-                        @if($firstKelas && $firstMapel && $firstSemester && $firstTa)
-                            <a href="{{ route('guru.nilai.form', [$firstKelas, 'mata_pelajaran_id'=>$firstMapel, 'semester_id'=>$firstSemester, 'tahun_ajaran_id'=>$firstTa, 'jenis_penilaian'=>'UH', 'tanggal'=>$tanggal]) }}"
-                               class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-zinc-800">
-                                Tambah Nilai
-                            </a>
-                        @else
-                            <span class="inline-flex items-center rounded-xl bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-500">Data referensi belum lengkap</span>
-                        @endif
+                    </div>
+                </div>
+                @php
+                    $canStart = $jadwals->isNotEmpty() && $semesters->isNotEmpty() && $tahunAjarans->isNotEmpty() && !empty($jenisPenilaian);
+                    $firstJadwal = $jadwals->first();
+                    $firstJenis = collect($jenisPenilaian)->keys()->first();
+                @endphp
+                <div class="border-t border-zinc-200 p-4 space-y-4">
+                    <form method="GET" action="{{ route('guru.nilai.start') }}" class="space-y-4">
+                        <div class="grid gap-4 md:grid-cols-2">
+                            <label class="space-y-1 text-sm">
+                                <span class="uppercase text-xs text-zinc-500">Jadwal Mengajar</span>
+                                <select name="jadwal_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" @disabled(!$canStart)>
+                                    @forelse($jadwals as $jadwal)
+                                        <option value="{{ $jadwal->id }}" @selected(old('jadwal_id', $firstJadwal?->id) == $jadwal->id)>
+                                            {{ $jadwal->kelas?->nama_kelas ?? '-' }} • {{ $jadwal->mapel?->nama ?? '-' }} ({{ $jadwal->hari }} {{ $jadwal->jam_mulai }}-{{ $jadwal->jam_selesai }})
+                                        </option>
+                                    @empty
+                                        <option value="">Belum ada jadwal mengajar</option>
+                                    @endforelse
+                                </select>
+                            </label>
+                            <label class="space-y-1 text-sm">
+                                <span class="uppercase text-xs text-zinc-500">Jenis Penilaian</span>
+                                <select name="jenis_penilaian" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" @disabled(!$canStart)>
+                                    @foreach($jenisPenilaian as $key => $label)
+                                        <option value="{{ $key }}" @selected(old('jenis_penilaian', $firstJenis) == $key)>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <label class="space-y-1 text-sm">
+                                <span class="uppercase text-xs text-zinc-500">Semester</span>
+                                <select name="semester_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" @disabled(!$canStart)>
+                                    @foreach($semesters as $id => $nama)
+                                        <option value="{{ $id }}" @selected(old('semester_id', $semesters->keys()->first()) == $id)>
+                                            {{ $nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <label class="space-y-1 text-sm">
+                                <span class="uppercase text-xs text-zinc-500">Tahun Ajaran</span>
+                                <select name="tahun_ajaran_id" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" @disabled(!$canStart)>
+                                    @foreach($tahunAjarans as $id => $nama)
+                                        <option value="{{ $id }}" @selected(old('tahun_ajaran_id', $tahunAjarans->keys()->first()) == $id)>
+                                            {{ $nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                            <label class="space-y-1 text-sm">
+                                <span class="uppercase text-xs text-zinc-500">Tanggal</span>
+                                <input type="date" name="tanggal" value="{{ old('tanggal', $tanggal) }}" class="w-full rounded-xl border border-zinc-200 px-3 py-2 text-sm outline-none focus:border-zinc-900" @disabled(!$canStart)>
+                            </label>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="inline-flex items-center justify-center rounded-xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-800" @disabled(!$canStart)>
+                                Lanjut Input Nilai
+                            </button>
+                            @if(!$canStart)
+                                <span class="inline-flex items-center rounded-xl bg-zinc-100 px-3 py-2 text-xs font-semibold text-zinc-500">Data jadwal/semester/tahun ajaran belum lengkap</span>
+                            @endif
+                        </div>
+                    </form>
+
+                    <div class="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700 space-y-1">
+                        <div class="font-semibold text-zinc-900">Alur Penilaian</div>
+                        <div>1. Pilih jadwal mengajar sesuai mapel yang diampu.</div>
+                        <div>2. Isi nilai untuk Tugas Mingguan, Tengah Periode, dan Akhir Periode.</div>
+                        <div>3. Nilai akhir mapel dihitung dari bobot:
+                            @foreach($jenisPenilaian as $key => $label)
+                                <span class="font-semibold">{{ $label }} {{ (int) round(($bobot[$key] ?? 0) * 100) }}%</span>@if(!$loop->last),@endif
+                            @endforeach
+                        </div>
+                        <div>4. Kenaikan kelas menggunakan rata-rata nilai akhir mapel (ambang {{ $ambangNaik }}).</div>
                     </div>
                 </div>
             </div>
@@ -57,7 +120,7 @@
                                     <td class="px-4 py-3 text-zinc-800">{{ $row->nama_kelas ?? '-' }}</td>
                                     <td class="px-4 py-3 text-zinc-800">{{ $row->mapel ?? '-' }}</td>
                                     <td class="px-4 py-3 text-zinc-800">{{ ($row->semester ?? '-') }} / {{ $row->tahun_ajaran ?? '-' }}</td>
-                                    <td class="px-4 py-3 text-zinc-800">{{ $row->jenis_penilaian }}</td>
+                                    <td class="px-4 py-3 text-zinc-800">{{ $jenisLabels[$row->jenis_penilaian] ?? $row->jenis_penilaian }}</td>
                                     <td class="px-4 py-3">
                                         <span class="inline-flex items-center rounded-lg border border-zinc-200 px-2.5 py-1 text-xs font-semibold">{{ $row->total }} nilai</span>
                                     </td>

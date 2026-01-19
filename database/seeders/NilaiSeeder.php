@@ -20,7 +20,7 @@ class NilaiSeeder extends Seeder
 
         if ($santris->isEmpty() || empty($mapels) || !$semester || !$ta) return;
 
-        $jenis = ['UH','UTS','UAS','Praktik'];
+        $jenis = array_keys(config('penilaian.jenis', ['UH','UTS','UAS']));
         foreach ($santris as $i => $s) {
             foreach ($mapels as $j => $mapelId) {
                 $jenisIdx = ($i + $j) % count($jenis);
@@ -43,4 +43,3 @@ class NilaiSeeder extends Seeder
         }
     }
 }
-

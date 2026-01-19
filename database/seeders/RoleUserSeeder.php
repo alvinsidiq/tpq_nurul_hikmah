@@ -25,17 +25,52 @@ class RoleUserSeeder extends Seeder
         );
         $admin->assignRole('admin');
 
-        $guru1 = User::firstOrCreate(
-            ['email' => 'guru1@tpq.test'],
-            ['name' => 'Guru Satu', 'password' => Hash::make('password')]
-        );
-        $guru1->assignRole('guru');
+        $guruUsers = [
+            [
+                'email' => 'guru1@tpq.test',
+                'name' => 'Ahmad Fauzi',
+                'phone' => '081234567890',
+                'alamat' => 'Jl. Melati No. 12, Cibinong',
+            ],
+            [
+                'email' => 'guru2@tpq.test',
+                'name' => 'Siti Nur Aisyah',
+                'phone' => '081326789012',
+                'alamat' => 'Jl. Kenanga No. 8, Bogor',
+            ],
+            [
+                'email' => 'guru3@tpq.test',
+                'name' => 'Muhammad Rizky Pratama',
+                'phone' => '081290112233',
+                'alamat' => 'Jl. Anggrek No. 4, Depok',
+            ],
+            [
+                'email' => 'guru4@tpq.test',
+                'name' => 'Dewi Lestari',
+                'phone' => '081298765432',
+                'alamat' => 'Jl. Mawar No. 15, Depok',
+            ],
+        ];
 
-        $guru2 = User::firstOrCreate(
-            ['email' => 'guru2@tpq.test'],
-            ['name' => 'Guru Dua', 'password' => Hash::make('password')]
-        );
-        $guru2->assignRole('guru');
+        foreach ($guruUsers as $data) {
+            $guru = User::firstOrCreate(
+                ['email' => $data['email']],
+                [
+                    'name' => $data['name'],
+                    'password' => Hash::make('password'),
+                    'phone' => $data['phone'],
+                    'status' => 'active',
+                    'alamat' => $data['alamat'],
+                ]
+            );
+            $guru->update([
+                'name' => $data['name'],
+                'phone' => $data['phone'],
+                'status' => 'active',
+                'alamat' => $data['alamat'],
+            ]);
+            $guru->assignRole('guru');
+        }
 
         $wali1 = User::firstOrCreate(
             ['email' => 'wali1@tpq.test'],

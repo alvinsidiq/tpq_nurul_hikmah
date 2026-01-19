@@ -9,6 +9,29 @@ class Nilai extends Model
 {
     protected $guarded = [];
 
+    public static function jenisPenilaianOptions(): array
+    {
+        return config('penilaian.jenis', []);
+    }
+
+    public static function jenisPenilaianLabels(): array
+    {
+        return array_merge(
+            config('penilaian.jenis', []),
+            config('penilaian.legacy', [])
+        );
+    }
+
+    public static function bobotPenilaian(): array
+    {
+        return config('penilaian.bobot', []);
+    }
+
+    public static function ambangNaik(): int
+    {
+        return (int) config('penilaian.ambang_naik', 70);
+    }
+
     public function santri(): BelongsTo
     {
         return $this->belongsTo(Santri::class);
@@ -29,4 +52,3 @@ class Nilai extends Model
         return $this->belongsTo(TahunAjaran::class);
     }
 }
-
